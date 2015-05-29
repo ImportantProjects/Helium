@@ -163,6 +163,92 @@ project( prefix .. "EditorScene" )
 		}
 	end
 
+project( prefix .. "FuseSQL" )
+
+	Helium.DoModuleProjectSettings( ".", "HELIUM", "FuseSQL", "FUSE_SQL" )
+
+	files
+	{
+		"Fuse/SQL/*",
+	}
+
+	excludes
+	{
+		"Fuse/SQL/sqlite3.*"
+	}
+
+	configuration "SharedLib"
+		links
+		{
+			prefix .. "Platform",
+			prefix .. "Foundation",
+			prefix .. "Application",
+		}
+
+project( prefix .. "FuseDependencies" )
+
+	Helium.DoModuleProjectSettings( ".", "HELIUM", "FuseDependencies", "FUSE_DEPENDENCIES" )
+
+	files
+	{
+		"Fuse/Dependencies/*",
+	}
+
+	configuration "SharedLib"
+		links
+		{
+			prefix .. "Platform",
+			prefix .. "Foundation",
+			prefix .. "Application",
+			prefix .. "FuseSQL",
+		}
+
+project( prefix .. "FuseBuilder" )
+
+	Helium.DoModuleProjectSettings( ".", "HELIUM", "FuseBuilder", "FUSE_BUILDER" )
+
+	files
+	{
+		"Fuse/Builder/*",
+	}
+
+	configuration "SharedLib"
+		links
+		{
+			prefix .. "Platform",
+			prefix .. "Foundation",
+			prefix .. "Application",
+			prefix .. "Reflect",
+			prefix .. "Persist",
+			prefix .. "Mongo",
+			prefix .. "FuseSQL",
+			prefix .. "FuseDependencies",
+		}
+
+project( prefix .. "Fuse" )
+
+	kind "ConsoleApp"
+
+	Helium.DoBasicProjectSettings()
+
+	files
+	{
+		"Fuse/Fuse.cpp",
+	}
+
+	links
+	{
+		prefix .. "Platform",
+		prefix .. "Foundation",
+		prefix .. "Application",
+		prefix .. "Reflect",
+		prefix .. "Persist",
+		prefix .. "Mongo",
+		prefix .. "FuseSQL",
+		prefix .. "FuseDependencies",
+		prefix .. "FuseBuilder",
+	}
+
 project( prefix .. "Editor" )
 
 	kind "ConsoleApp"
